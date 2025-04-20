@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laurent Agency</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+        <div class="background">
+        <div class="gradient"></div>
+        <div class="blob-container">
+            <div class="blob"></div>
+        </div>
+    </div>
+    
+    <header>
+        <nav>
+            <div class="logo">Laurent Agency</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#coverage">Coverage</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Insurance Made Simple</h1>
+            <p>Protect what matters most with our innovative coverage solutions</p>
+            <button class="cta-button">Get Your Quote</button>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <h3>Auto Insurance</h3>
+                <p>Comprehensive coverage for your vehicle</p>
+            </div>
+            <div class="feature-card">
+                <h3>Home Insurance</h3>
+                <p>Protect your most valuable asset</p>
+            </div>
+            <div class="feature-card">
+                <h3>Life Insurance</h3>
+                <p>Secure your family's future</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Laurent Agency. All rights reserved.</p>
+    </footer>
+
+    <!-- Chatbot Interface -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <span>AI Assistant</span>
+            <button id="close-chat">×</button>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="send-message">Send</button>
+        </div>
+    </div>
+    <button class="chat-toggle" id="chat-toggle">
+        <span>Chat with us</span>
+    </button>
+    <script src="script.js"></script>
+</body>
+</html>
