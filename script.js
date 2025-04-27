@@ -1,156 +1,216 @@
-// Chatbot responses
-const botResponses = {
-    greeting: ["Hello! Welcome to Laurent Agency. How can I assist you today?", "Hi there! I'm here to help with your insurance needs."],
-    services: ["We offer various insurance services including:\n- Auto Insurance\n- Home Insurance\n- Life Insurance\nWhat type of insurance are you interested in?"],
-    appointment: ["I'd be happy to help you schedule an appointment. Please provide your preferred date and time, and I'll check our availability."],
-    contact: ["You can reach us at:\nPhone: (555) 123-4567\nEmail: contact@laurentagency.com\nOr I can help you schedule an appointment!"],
-    default: ["I'm not sure I understand. Could you please rephrase that?", "Would you like to know about our services or schedule an appointment?"],
-    hours: ["Our office hours are:\nMonday-Friday: 9:00 AM - 6:00 PM\nSaturday: 10:00 AM - 2:00 PM\nSunday: Closed"],
-    location: ["We are located at:\n123 Insurance Plaza\nNew York, NY 10001"],
-};
-
-// Chatbot logic
-class Chatbot {
+// Background Slider functionality
+class BackgroundSlider {
     constructor() {
-        this.messages = [];
-    }
-
-    processMessage(message) {
-        message = message.toLowerCase();
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.slideInterval = 5000; // Change slide every 5 seconds
+        this.isTransitioning = false;
         
-        if (message.includes('hi') || message.includes('hello')) {
-            return this.getRandomResponse('greeting');
-        } else if (message.includes('service') || message.includes('insurance') || message.includes('coverage')) {
-            return this.getRandomResponse('services');
-        } else if (message.includes('appointment') || message.includes('schedule') || message.includes('meet')) {
-            return this.getRandomResponse('appointment');
-        } else if (message.includes('contact') || message.includes('phone') || message.includes('email')) {
-            return this.getRandomResponse('contact');
-        } else if (message.includes('hour') || message.includes('open')) {
-            return this.getRandomResponse('hours');
-        } else if (message.includes('location') || message.includes('address') || message.includes('where')) {
-            return this.getRandomResponse('location');
-        }
-        
-        return this.getRandomResponse('default');
+        this.startSlider();
     }
-
-    getRandomResponse(type) {
-        const responses = botResponses[type];
-        return responses[Math.floor(Math.random() * responses.length)];
+    
+    startSlider() {
+        // Start the automatic slideshow
+        setInterval(() => {
+            if (!this.isTransitioning) {
+                this.nextSlide();
+            }
+        }, this.slideInterval);
+    }
+    
+    nextSlide() {
+        this.isTransitioning = true;
+        
+        // Remove active class from current slide
+        this.slides[this.currentSlide].classList.remove('active');
+        
+        // Move to next slide
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        
+        // Add active class to new slide
+        this.slides[this.currentSlide].classList.add('active');
+        
+        // Reset transition flag after animation completes
+        setTimeout(() => {
+            this.isTransitioning = false;
+        }, 1500); // Match this with the CSS transition duration
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Smooth scroll for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
         });
-    });
-
-    // Blob animation
-    const blob = document.querySelector('.blob');
-    let lastScrollY = window.scrollY;
-    let lastMouseX = window.innerWidth / 2;
-    let lastMouseY = window.innerHeight / 2;
-    let targetX = lastMouseX;
-    let targetY = lastMouseY;
-
-    // Update blob position on scroll and mouse move
-    function updateBlobPosition() {
-        const scrollDiff = window.scrollY - lastScrollY;
-        targetY += scrollDiff;
-        lastScrollY = window.scrollY;
-
-        lastMouseX += (targetX - lastMouseX) * 0.1;
-        lastMouseY += (targetY - lastMouseY) * 0.1;
-
-        blob.style.left = `${lastMouseX}px`;
-        blob.style.top = `${lastMouseY}px`;
-
-        requestAnimationFrame(updateBlobPosition);
-    }
-
-    // Track mouse movement
-    window.addEventListener('mousemove', (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY + window.scrollY;
-    });
-
-    // Initialize blob position
-    updateBlobPosition();
-
-    // Animate feature cards on scroll
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = 1;
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    });
-
-    document.querySelectorAll('.feature-card').forEach((card) => {
-        card.style.opacity = 0;
-        card.style.transform = 'translateY(20px)';
-        observer.observe(card);
-    });
-
-    // Chatbot initialization
-    const chatbot = new Chatbot();
-    const chatbotContainer = document.getElementById('chatbot');
-    const chatMessages = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const sendButton = document.getElementById('send-message');
-    const chatToggle = document.getElementById('chat-toggle');
-    const closeChat = document.getElementById('close-chat');
-
-    // Toggle chat window
-    chatToggle.addEventListener('click', () => {
-        chatbotContainer.classList.add('active');
-        if (chatMessages.children.length === 0) {
-            addMessage('bot', chatbot.getRandomResponse('greeting'));
-        }
-    });
-
-    closeChat.addEventListener('click', () => {
-        chatbotContainer.classList.remove('active');
-    });
-
-    // Send message function
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            addMessage('user', message);
-            chatInput.value = '';
-            
-            // Simulate typing delay
-            setTimeout(() => {
-                const response = chatbot.processMessage(message);
-                addMessage('bot', response);
-            }, 500);
-        }
-    }
-
-    // Add message to chat
-    function addMessage(type, content) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('chat-message');
-        messageDiv.classList.add(type + '-message');
-        messageDiv.textContent = content;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // Event listeners for sending messages
-    sendButton.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
     });
 });
+
+// Chatbot functionality
+class LaurentAgent {
+    constructor() {
+        this.chatbot = document.getElementById('chatbot');
+        this.chatIcon = document.getElementById('chat-icon');
+        this.messages = document.getElementById('chatbot-messages');
+        this.input = document.getElementById('user-input');
+        this.sendButton = document.getElementById('send-message');
+        this.toggleButton = document.getElementById('chatbot-toggle');
+        this.userInfo = {
+            name: null,
+            email: null,
+            phone: null,
+            appointmentDate: null,
+            appointmentTime: null
+        };
+        this.currentState = 'greeting';
+        
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        // Chat icon click event
+        this.chatIcon.addEventListener('click', () => {
+            this.toggleChatbot();
+            if (this.chatbot.classList.contains('active') && this.messages.children.length === 0) {
+                this.startChat();
+            }
+        });
+        
+        // Close button click event
+        this.toggleButton.addEventListener('click', () => this.toggleChatbot());
+        
+        // Send button click event
+        this.sendButton.addEventListener('click', () => this.handleUserInput());
+        
+        // Enter key press event
+        this.input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.handleUserInput();
+        });
+    }
+
+    toggleChatbot() {
+        this.chatbot.classList.toggle('active');
+        if (this.chatbot.classList.contains('active')) {
+            this.input.focus();
+        }
+    }
+
+    startChat() {
+        this.addMessage('Laurent Agent', 'Hello! Welcome to Laurent Agency. How can I assist you today?');
+    }
+
+    addMessage(sender, message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender.toLowerCase().replace(' ', '-')}`;
+        messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        this.messages.appendChild(messageDiv);
+        this.messages.scrollTop = this.messages.scrollHeight;
+    }
+
+    handleUserInput() {
+        const userMessage = this.input.value.trim();
+        if (!userMessage) return;
+
+        this.addMessage('You', userMessage);
+        this.input.value = '';
+
+        this.processUserInput(userMessage);
+    }
+
+    processUserInput(input) {
+        const lowerInput = input.toLowerCase();
+
+        switch (this.currentState) {
+            case 'greeting':
+                if (lowerInput.includes('quote') || lowerInput.includes('price')) {
+                    this.addMessage('Laurent Agent', 'I\'d be happy to help you get a quote. Could you please tell me your name?');
+                    this.currentState = 'collecting_name';
+                } else if (lowerInput.includes('service') || lowerInput.includes('offer')) {
+                    this.addMessage('Laurent Agent', 'We offer various insurance services including Auto, Home, Life, and Business insurance. Which type of insurance are you interested in?');
+                } else if (lowerInput.includes('contact') || lowerInput.includes('reach')) {
+                    this.addMessage('Laurent Agent', 'You can reach us at (555) 123-4567 or email us at info@laurentagency.com. Would you like to schedule an appointment?');
+                    if (lowerInput.includes('yes') || lowerInput.includes('sure') || lowerInput.includes('appointment')) {
+                        this.addMessage('Laurent Agent', 'Great! Could you please tell me your name?');
+                        this.currentState = 'collecting_name';
+                    }
+                } else if (lowerInput.includes('appointment') || lowerInput.includes('schedule')) {
+                    this.addMessage('Laurent Agent', 'I\'d be happy to help you schedule an appointment. Could you please tell me your name?');
+                    this.currentState = 'collecting_name';
+                } else {
+                    this.addMessage('Laurent Agent', 'I can help you with quotes, information about our services, or scheduling an appointment. What would you like to know more about?');
+                }
+                break;
+
+            case 'collecting_name':
+                this.userInfo.name = input;
+                this.addMessage('Laurent Agent', `Thank you, ${input}! Could you please provide your email address?`);
+                this.currentState = 'collecting_email';
+                break;
+
+            case 'collecting_email':
+                if (this.isValidEmail(input)) {
+                    this.userInfo.email = input;
+                    this.addMessage('Laurent Agent', 'Great! And finally, what\'s your phone number?');
+                    this.currentState = 'collecting_phone';
+                } else {
+                    this.addMessage('Laurent Agent', 'That doesn\'t look like a valid email address. Please try again.');
+                }
+                break;
+
+            case 'collecting_phone':
+                this.userInfo.phone = input;
+                this.addMessage('Laurent Agent', `Thank you for providing your information, ${this.userInfo.name}! Would you like to schedule an appointment? (Yes/No)`);
+                this.currentState = 'asking_appointment';
+                break;
+                
+            case 'asking_appointment':
+                if (lowerInput.includes('yes') || lowerInput.includes('sure')) {
+                    this.addMessage('Laurent Agent', 'Great! What date would you prefer for your appointment? (Please enter in MM/DD/YYYY format)');
+                    this.currentState = 'collecting_date';
+                } else {
+                    this.addMessage('Laurent Agent', `Thank you for your interest, ${this.userInfo.name}! One of our agents will contact you shortly to discuss your insurance needs. Is there anything else you'd like to know?`);
+                    this.currentState = 'greeting';
+                }
+                break;
+                
+            case 'collecting_date':
+                if (this.isValidDate(input)) {
+                    this.userInfo.appointmentDate = input;
+                    this.addMessage('Laurent Agent', 'Perfect! What time would you prefer? (Please enter in HH:MM AM/PM format)');
+                    this.currentState = 'collecting_time';
+                } else {
+                    this.addMessage('Laurent Agent', 'That doesn\'t look like a valid date. Please enter in MM/DD/YYYY format.');
+                }
+                break;
+                
+            case 'collecting_time':
+                if (this.isValidTime(input)) {
+                    this.userInfo.appointmentTime = input;
+                    this.addMessage('Laurent Agent', `Great! I've scheduled your appointment for ${this.userInfo.appointmentDate} at ${this.userInfo.appointmentTime}. One of our agents will confirm this appointment with you shortly. Is there anything else you'd like to know?`);
+                    this.currentState = 'greeting';
+                } else {
+                    this.addMessage('Laurent Agent', 'That doesn\'t look like a valid time. Please enter in HH:MM AM/PM format.');
+                }
+                break;
+        }
+    }
+
+    isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    
+    isValidDate(date) {
+        return /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/.test(date);
+    }
+    
+    isValidTime(time) {
+        return /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/.test(time);
+    }
+}
+
+// Initialize both the slider and chatbot when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const backgroundSlider = new BackgroundSlider();
+    const chatbot = new LaurentAgent();
+}); 

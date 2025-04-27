@@ -3,72 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laurent Agency</title>
+    <title>Laurent Agency - Your Trusted Insurance Partner</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-        <div class="background">
-        <div class="gradient"></div>
-        <div class="blob-container">
-            <div class="blob"></div>
-        </div>
-    </div>
-    
-    <header>
-        <nav>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
             <div class="logo">Laurent Agency</div>
             <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#coverage">Coverage</a>
                 <a href="#about">About</a>
+                <a href="#services">Services</a>
                 <a href="#contact">Contact</a>
+                <button class="cta-button">Get a Quote</button>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <main>
-        <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: url('images/1.jpg')"></div>
+            <div class="slide" style="background-image: url('images/2.jpg')"></div>
+            <div class="slide" style="background-image: url('images/3.jpg')"></div>
+            <div class="slide" style="background-image: url('images/4.jpg')"></div>
+            <div class="slide" style="background-image: url('images/5.jpg')"></div>
+            <div class="overlay"></div>
+        </div>
+        <div class="container hero-content">
             <h1>Insurance Made Simple</h1>
-            <p>Protect what matters most with our innovative coverage solutions</p>
-            <button class="cta-button">Get Your Quote</button>
-        </section>
+            <p>Protecting what matters most with personalized coverage solutions.</p>
+            <button class="cta-button">Get Started</button>
+        </div>
+    </section>
 
-        <section class="features">
-            <div class="feature-card">
-                <h3>Auto Insurance</h3>
-                <p>Comprehensive coverage for your vehicle</p>
-            </div>
-            <div class="feature-card">
-                <h3>Home Insurance</h3>
-                <p>Protect your most valuable asset</p>
-            </div>
-            <div class="feature-card">
-                <h3>Life Insurance</h3>
-                <p>Secure your family's future</p>
-            </div>
-        </section>
-    </main>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Laurent Agency</h2>
+            <p>With over 20 years of experience, Laurent Agency has been serving our community with dedication and expertise. We're more than just insurance agents – we're your neighbors, committed to providing personalized coverage solutions that protect what matters most to you.</p>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Laurent Agency. All rights reserved.</p>
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Auto Insurance</h3>
+                    <p>Comprehensive coverage for your vehicles with competitive rates.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Home Insurance</h3>
+                    <p>Protect your home and belongings with our tailored coverage options.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Life Insurance</h3>
+                    <p>Secure your family's future with our life insurance solutions.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Business Insurance</h3>
+                    <p>Comprehensive coverage for businesses of all sizes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <p>Ready to find the perfect coverage for your needs? Contact us today!</p>
+            <button class="cta-button">Contact Us</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Laurent Agency</h3>
+                    <p>Your trusted insurance partner since 2000</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: info@laurentagency.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" target="_blank">Facebook</a>
+                        <a href="#" target="_blank">Twitter</a>
+                        <a href="#" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Laurent Agency. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- Chatbot Interface -->
-    <div class="chatbot-container" id="chatbot">
+    <!-- Chat Icon Button -->
+    <div id="chat-icon" class="chat-icon">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="chatbot">
         <div class="chatbot-header">
-            <span>AI Assistant</span>
-            <button id="close-chat">×</button>
+            <h3>Laurent Agent</h3>
+            <button id="chatbot-toggle">×</button>
         </div>
-        <div class="chat-messages" id="chat-messages"></div>
-        <div class="chat-input-container">
-            <input type="text" id="chat-input" placeholder="Type your message...">
+        <div class="chatbot-messages" id="chatbot-messages">
+            <!-- Messages will be inserted here -->
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
             <button id="send-message">Send</button>
         </div>
     </div>
-    <button class="chat-toggle" id="chat-toggle">
-        <span>Chat with us</span>
-    </button>
+
     <script src="script.js"></script>
 </body>
-</html>
+</html> 
