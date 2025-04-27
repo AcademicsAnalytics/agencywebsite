@@ -6,7 +6,56 @@ class BackgroundSlider {
         this.slideInterval = 5000; // Change slide every 5 seconds
         this.isTransitioning = false;
         
+        this.loadImages();
         this.startSlider();
+    }
+    
+    async loadImages() {
+        try {
+            // Define the image files explicitly to ensure they're loaded correctly
+            const imageFiles = [
+                'images/1.jpg',
+                'images/2.webp',
+                'images/3.jpg',
+                'images/4.webp',
+                'images/5.webp',
+                'images/6.webp',
+                'images/7.webp'
+            ];
+            
+            // Clear existing slides
+            const slider = document.querySelector('.hero-slider');
+            slider.innerHTML = '';
+            
+            // Add new slides with error handling
+            imageFiles.forEach(file => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                slide.style.backgroundImage = `url('${file}')`;
+                
+                // Add error handling for background images
+                const img = new Image();
+                img.onerror = function() {
+                    slide.style.backgroundImage = "url('images/fallback.jpg')";
+                };
+                img.src = file;
+                
+                slider.appendChild(slide);
+            });
+            
+            // Add overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            slider.appendChild(overlay);
+            
+            // Update slides reference
+            this.slides = document.querySelectorAll('.slide');
+            if (this.slides.length > 0) {
+                this.slides[0].classList.add('active');
+            }
+        } catch (error) {
+            console.error('Error loading images:', error);
+        }
     }
     
     startSlider() {
@@ -64,29 +113,134 @@ class LaurentAgent {
             appointmentTime: null
         };
         this.currentState = 'greeting';
+        this.inactivityTimer = null;
+        this.repromptTimer = null;
+        this.isReprompting = false;
         
         this.setupEventListeners();
+        this.initializeChatbot();
+    }
+
+    initializeChatbot() {
+        // Wait 500ms before showing the chatbot with animation
+        setTimeout(() => {
+            this.openWithAnimation();
+        }, 500);
+    }
+    
+    openWithAnimation() {
+        // Reset any existing animation
+        this.chatbot.style.animation = 'none';
+        this.chatbot.offsetHeight; // Trigger reflow
+        
+        // Apply the thinking bubble animation
+        this.chatbot.style.animation = 'thinkingBubble 1s ease-out forwards';
+        this.chatbot.classList.add('active');
+        
+        // Add welcome message after animation completes
+        setTimeout(() => {
+            this.addMessage('Laurent Agent', 'Hi there! I\'m Laurent Agent. Please type your information to schedule an immediate appointment and get started. I\'m here to help you feel at home.');
+            
+            // Start inactivity timer
+            this.startInactivityTimer();
+        }, 1000);
+    }
+    
+    startInactivityTimer() {
+        // Clear any existing timers
+        if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
+        if (this.repromptTimer) clearInterval(this.repromptTimer);
+        
+        // Set 30 second inactivity timer
+        this.inactivityTimer = setTimeout(() => {
+            this.closeChatbot();
+            this.startRepromptCycle();
+        }, 30000);
+    }
+    
+    closeChatbot() {
+        this.chatbot.classList.remove('active');
+        this.isReprompting = true;
+    }
+    
+    startRepromptCycle() {
+        // Clear any existing reprompt timer
+        if (this.repromptTimer) clearInterval(this.repromptTimer);
+        
+        // Start 20 second reprompt cycle
+        this.repromptTimer = setInterval(() => {
+            this.showReprompt();
+        }, 20000);
+        
+        // Show first reprompt immediately
+        this.showReprompt();
+    }
+    
+    showReprompt() {
+        // Add pulsing animation to chat icon
+        this.chatIcon.classList.add('pulse');
+        
+        // Create and show reprompt tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'reprompt-tooltip';
+        tooltip.textContent = 'Speak to our AI AGENT and schedule an appointment in minutes.';
+        this.chatIcon.appendChild(tooltip);
+        
+        // Remove tooltip and animation after 3 seconds
+        setTimeout(() => {
+            this.chatIcon.classList.remove('pulse');
+            if (tooltip.parentNode === this.chatIcon) {
+                this.chatIcon.removeChild(tooltip);
+            }
+        }, 3000);
     }
 
     setupEventListeners() {
         // Chat icon click event
         this.chatIcon.addEventListener('click', () => {
+            // If reprompting, reset the state
+            if (this.isReprompting) {
+                this.isReprompting = false;
+                if (this.repromptTimer) clearInterval(this.repromptTimer);
+            }
+            
             this.toggleChatbot();
             if (this.chatbot.classList.contains('active') && this.messages.children.length === 0) {
-                this.startChat();
+                this.openWithAnimation();
             }
         });
         
         // Close button click event
-        this.toggleButton.addEventListener('click', () => this.toggleChatbot());
+        this.toggleButton.addEventListener('click', () => {
+            this.toggleChatbot();
+            if (!this.chatbot.classList.contains('active')) {
+                this.startRepromptCycle();
+            }
+        });
         
         // Send button click event
-        this.sendButton.addEventListener('click', () => this.handleUserInput());
+        this.sendButton.addEventListener('click', () => {
+            this.handleUserInput();
+            this.resetInactivityTimer();
+        });
         
         // Enter key press event
         this.input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.handleUserInput();
+            if (e.key === 'Enter') {
+                this.handleUserInput();
+                this.resetInactivityTimer();
+            }
         });
+        
+        // Input focus event
+        this.input.addEventListener('focus', () => {
+            this.resetInactivityTimer();
+        });
+    }
+    
+    resetInactivityTimer() {
+        // Reset the inactivity timer when user interacts
+        this.startInactivityTimer();
     }
 
     toggleChatbot() {
@@ -209,8 +363,8 @@ class LaurentAgent {
     }
 }
 
-// Initialize both the slider and chatbot when the page loads
+// Initialize components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const backgroundSlider = new BackgroundSlider();
-    const chatbot = new LaurentAgent();
+    new BackgroundSlider();
+    new LaurentAgent();
 }); 
