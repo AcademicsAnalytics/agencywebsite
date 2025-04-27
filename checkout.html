@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - TheInjurenfna</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">TheInjurenfna</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="ai-consulting.html">AI Consulting</a>
+                <a href="signin.html" class="sign-in-btn">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <h1>Complete Your Purchase</h1>
+            <div class="checkout-grid">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div class="service-details">
+                        <div class="service-item">
+                            <h3 id="service-name">Service Name</h3>
+                            <span id="service-price">$0.00</span>
+                        </div>
+                    </div>
+                    <div class="price-summary">
+                        <div class="price-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Discount</span>
+                            <span id="discount">-$0.00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <div class="payment-form">
+                    <h2>Payment Details</h2>
+                    <form id="payment-form">
+                        <div class="form-group">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry">Expiry Date</label>
+                                <input type="text" id="expiry" placeholder="MM/YY" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email for Receipt</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="terms">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">I agree to the terms and conditions</label>
+                        </div>
+                        <button type="submit" class="btn primary">Complete Purchase</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Secure Checkout Badge -->
+            <div class="secure-checkout-badge">
+                <i class="fas fa-lock"></i>
+                <span>Secure Checkout</span>
+            </div>
+
+            <!-- Support Guarantee -->
+            <div class="support-guarantee">
+                <i class="fas fa-headset"></i>
+                <h3>30-Day Support Guarantee</h3>
+                <p>Our team is here to help you with any questions or concerns.</p>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <div class="payment-method" style="background-image: url('images/visa.png')"></div>
+                <div class="payment-method" style="background-image: url('images/mastercard.png')"></div>
+                <div class="payment-method" style="background-image: url('images/amex.png')"></div>
+                <div class="payment-method" style="background-image: url('images/discover.png')"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TheInjurenfna</h3>
+                    <p>Empowering businesses with innovative AI solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="ai-consulting.html">AI Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>AI Consultation: <a href="tel:203-833-3157">203-833-3157</a></p>
+                    <p>Email: info@theinjurenfna.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/erik-lorent-b949a1141/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://www.facebook.com/share/1AV1VRjX6i/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://x.com/eriklorent" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-x-twitter"></i> Twitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TheInjurenfna. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="chat-icon">
+        <i class="fas fa-comments"></i>
+    </div>
+    <div class="chatbot">
+        <div class="chat-header">
+            <h3>Chat with Laurent</h3>
+            <button class="close-chat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message...">
+            <button><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const service = urlParams.get('service');
+        const price = urlParams.get('price');
+
+        // Update order summary
+        document.getElementById('service-name').textContent = service || 'Service Name';
+        document.getElementById('service-price').textContent = `$${price || '0.00'}`;
+        document.getElementById('subtotal').textContent = `$${price || '0.00'}`;
+        
+        // Calculate discount (10% off)
+        const subtotal = parseFloat(price) || 0;
+        const discount = subtotal * 0.1;
+        document.getElementById('discount').textContent = `-$${discount.toFixed(2)}`;
+        
+        // Calculate total
+        const total = subtotal - discount;
+        document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+    </script>
+</body>
+</html> 

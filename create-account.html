@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Laurent Agency</title>
+    <title>Create Account - Laurent Agency</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,12 +29,16 @@
         </div>
     </nav>
 
-    <!-- Sign In Section -->
+    <!-- Create Account Section -->
     <section class="signin-section">
         <div class="container">
             <div class="signin-form">
-                <h2>Sign In</h2>
-                <form id="loginForm" onsubmit="return handleLogin(event)">
+                <h2>Create an Account</h2>
+                <form id="createAccountForm" onsubmit="return handleCreateAccount(event)">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
@@ -43,9 +47,20 @@
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="cta-button">Sign In</button>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="text-link">Terms of Service</a> and <a href="#" class="text-link">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="cta-button">Create Account</button>
                 </form>
-                <p class="form-footer">Don't have an account? <a href="create-account.html" class="text-link">Create an Account</a></p>
+                <p class="form-footer">Already have an account? <a href="signin.html" class="text-link">Sign In</a></p>
             </div>
         </div>
     </section>
@@ -79,20 +94,25 @@
     </footer>
 
     <script>
-        function handleLogin(event) {
+        function handleCreateAccount(event) {
             event.preventDefault();
+            const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
             
-            // Simple client-side authentication stub
-            if (email && password) {
-                // Store user info in localStorage
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userName', email.split('@')[0]);
-                
-                // Redirect to dashboard
-                window.location.href = 'dashboard.html';
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return false;
             }
+            
+            // Store user info in localStorage
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userName', username);
+            
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
             return false;
         }
     </script>

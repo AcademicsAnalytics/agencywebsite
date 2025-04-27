@@ -35,6 +35,18 @@
             <h1>AI Consulting Services</h1>
             <p>Transform your business with beginner-friendly AI solutions</p>
             
+            <!-- Sale Banner -->
+            <div class="sale-banner">
+                <p>🔥 LIMITED TIME OFFER: 50% OFF ALL AI CONSULTING SERVICES - MAY ONLY! 🔥</p>
+                <div class="countdown" id="countdown">Sale ends in: 00:00:00</div>
+            </div>
+            
+            <!-- Tagline -->
+            <div class="tagline">
+                <h2>Automate your business now</h2>
+                <p>Don't miss out on this opportunity to revolutionize your operations</p>
+            </div>
+            
             <!-- Testimonials -->
             <div class="testimonials">
                 <div class="testimonial">
@@ -66,7 +78,7 @@
                         <span class="badge"><i class="fas fa-lock"></i> Secure Checkout</span>
                         <span class="badge"><i class="fas fa-clock"></i> 30-day support guarantee</span>
                     </div>
-                    <button class="cta-button">Get Started</button>
+                    <a href="cursor-ai-ide.html" class="cta-button">Get Started</a>
                 </div>
 
                 <!-- Service 2 -->
@@ -82,7 +94,7 @@
                         <span class="badge"><i class="fas fa-lock"></i> Secure Checkout</span>
                         <span class="badge"><i class="fas fa-clock"></i> 30-day support guarantee</span>
                     </div>
-                    <button class="cta-button">Get Started</button>
+                    <a href="n8n-automation.html" class="cta-button">Get Started</a>
                 </div>
 
                 <!-- Service 3 -->
@@ -98,7 +110,7 @@
                         <span class="badge"><i class="fas fa-lock"></i> Secure Checkout</span>
                         <span class="badge"><i class="fas fa-clock"></i> 30-day support guarantee</span>
                     </div>
-                    <button class="cta-button">Get Started</button>
+                    <a href="static-website-kit.html" class="cta-button">Get Started</a>
                 </div>
 
                 <!-- Service 4 -->
@@ -114,7 +126,7 @@
                         <span class="badge"><i class="fas fa-lock"></i> Secure Checkout</span>
                         <span class="badge"><i class="fas fa-clock"></i> 30-day support guarantee</span>
                     </div>
-                    <button class="cta-button">Get Started</button>
+                    <a href="data-dashboard.html" class="cta-button">Get Started</a>
                 </div>
 
                 <!-- Service 5 -->
@@ -130,7 +142,7 @@
                         <span class="badge"><i class="fas fa-lock"></i> Secure Checkout</span>
                         <span class="badge"><i class="fas fa-clock"></i> 30-day support guarantee</span>
                     </div>
-                    <button class="cta-button">Get Started</button>
+                    <a href="github-review.html" class="cta-button">Get Started</a>
                 </div>
             </div>
         </div>
@@ -192,5 +204,25 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+            const timeLeft = endOfMonth - now;
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').innerHTML = 
+                `Sale ends in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
+    </script>
 </body>
 </html> 

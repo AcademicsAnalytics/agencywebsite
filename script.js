@@ -116,6 +116,7 @@ class LaurentAgent {
         this.inactivityTimer = null;
         this.repromptTimer = null;
         this.isReprompting = false;
+        this.tooltip = null;
         
         this.setupEventListeners();
         this.initializeChatbot();
@@ -137,13 +138,20 @@ class LaurentAgent {
         this.chatbot.style.animation = 'thinkingBubble 1s ease-out forwards';
         this.chatbot.classList.add('active');
         
+        // Add loading message
+        this.addMessage('Laurent Agent', '<div class="loading-bubble"><span></span><span></span><span></span></div>');
+        
         // Add welcome message after animation completes
         setTimeout(() => {
-            this.addMessage('Laurent Agent', 'Hi there! I\'m Laurent Agent. Please type your information to schedule an immediate appointment and get started. I\'m here to help you feel at home.');
+            // Clear the loading message
+            this.messages.innerHTML = '';
+            
+            // Add the new welcome message
+            this.addMessage('Laurent Agent', 'Hi there! I\'m Laurent Agent. Please type your preferred contact information (phone number and email address) to schedule an immediate appointment and get started. I\'m here to help you feel at home.');
             
             // Start inactivity timer
             this.startInactivityTimer();
-        }, 1000);
+        }, 3000);
     }
     
     startInactivityTimer() {
@@ -177,20 +185,13 @@ class LaurentAgent {
     }
     
     showReprompt() {
-        // Add pulsing animation to chat icon
         this.chatIcon.classList.add('pulse');
+        this.showTooltip();
         
-        // Create and show reprompt tooltip
-        const tooltip = document.createElement('div');
-        tooltip.className = 'reprompt-tooltip';
-        tooltip.textContent = 'Speak to our AI AGENT and schedule an appointment in minutes.';
-        this.chatIcon.appendChild(tooltip);
-        
-        // Remove tooltip and animation after 3 seconds
         setTimeout(() => {
             this.chatIcon.classList.remove('pulse');
-            if (tooltip.parentNode === this.chatIcon) {
-                this.chatIcon.removeChild(tooltip);
+            if (!this.chatIcon.matches(':hover')) {
+                this.hideTooltip();
             }
         }, 3000);
     }
@@ -198,15 +199,24 @@ class LaurentAgent {
     setupEventListeners() {
         // Chat icon click event
         this.chatIcon.addEventListener('click', () => {
-            // If reprompting, reset the state
             if (this.isReprompting) {
                 this.isReprompting = false;
                 if (this.repromptTimer) clearInterval(this.repromptTimer);
             }
-            
             this.toggleChatbot();
             if (this.chatbot.classList.contains('active') && this.messages.children.length === 0) {
                 this.openWithAnimation();
+            }
+        });
+
+        // Chat icon hover events
+        this.chatIcon.addEventListener('mouseenter', () => {
+            this.showTooltip();
+        });
+
+        this.chatIcon.addEventListener('mouseleave', () => {
+            if (!this.isReprompting) {
+                this.hideTooltip();
             }
         });
         
@@ -215,6 +225,7 @@ class LaurentAgent {
             this.toggleChatbot();
             if (!this.chatbot.classList.contains('active')) {
                 this.startRepromptCycle();
+                this.showTooltip();
             }
         });
         
@@ -361,10 +372,158 @@ class LaurentAgent {
     isValidTime(time) {
         return /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/.test(time);
     }
+
+    showTooltip() {
+        if (!this.tooltip) {
+            this.tooltip = document.createElement('div');
+            this.tooltip.className = 'reprompt-tooltip';
+            this.tooltip.textContent = 'Connect With AI AGENT';
+            this.chatIcon.appendChild(this.tooltip);
+            
+            // Force reflow to ensure animation plays
+            this.tooltip.offsetHeight;
+            this.tooltip.style.animation = 'fadeInOut 3s ease-in-out forwards';
+        }
+    }
+
+    hideTooltip() {
+        if (this.tooltip && !this.isReprompting) {
+            this.tooltip.remove();
+            this.tooltip = null;
+        }
+    }
 }
 
 // Initialize components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new BackgroundSlider();
     new LaurentAgent();
-}); 
+});
+
+// Checkout Page Functions
+function getServiceDetails() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceId = urlParams.get('service');
+    const serviceName = urlParams.get('name');
+    const servicePrice = urlParams.get('price');
+    
+    if (serviceId && serviceName && servicePrice) {
+        const serviceDetails = document.querySelector('.service-details');
+        serviceDetails.innerHTML = `
+            <div class="service-item">
+                <h3>${serviceName}</h3>
+                <p class="price">$${servicePrice}</p>
+            </div>
+        `;
+        
+        // Update price summary
+        const subtotal = parseFloat(servicePrice);
+        const discount = subtotal * 0.1; // 10% discount
+        const total = subtotal - discount;
+        
+        document.querySelector('.subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.querySelector('.discount').textContent = `-$${discount.toFixed(2)}`;
+        document.querySelector('.total').textContent = `$${total.toFixed(2)}`;
+    }
+}
+
+function handlePayment(event) {
+    event.preventDefault();
+    
+    // Get form values
+    const cardName = document.getElementById('cardName').value;
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expiryDate = document.getElementById('expiryDate').value;
+    const cvv = document.getElementById('cvv').value;
+    const email = document.getElementById('email').value;
+    const terms = document.getElementById('terms').checked;
+    
+    // Basic validation
+    if (!cardName || !cardNumber || !expiryDate || !cvv || !email || !terms) {
+        alert('Please fill in all fields and accept the terms of service.');
+        return;
+    }
+    
+    // Validate card number (basic Luhn algorithm)
+    if (!validateCardNumber(cardNumber)) {
+        alert('Please enter a valid card number.');
+        return;
+    }
+    
+    // Validate expiry date
+    if (!validateExpiryDate(expiryDate)) {
+        alert('Please enter a valid expiry date (MM/YY).');
+        return;
+    }
+    
+    // Validate CVV
+    if (!validateCVV(cvv)) {
+        alert('Please enter a valid CVV (3 or 4 digits).');
+        return;
+    }
+    
+    // Validate email
+    if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    
+    // Simulate payment processing
+    const submitButton = document.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Processing...';
+    
+    setTimeout(() => {
+        // In a real implementation, this would be an API call to a payment processor
+        alert('Payment processed successfully! You will receive a confirmation email shortly.');
+        window.location.href = 'dashboard.html';
+    }, 2000);
+}
+
+function validateCardNumber(number) {
+    // Basic Luhn algorithm implementation
+    let sum = 0;
+    let isEven = false;
+    
+    // Loop through values starting from the rightmost side
+    for (let i = number.length - 1; i >= 0; i--) {
+        let digit = parseInt(number.charAt(i));
+        
+        if (isEven) {
+            digit *= 2;
+            if (digit > 9) {
+                digit -= 9;
+            }
+        }
+        
+        sum += digit;
+        isEven = !isEven;
+    }
+    
+    return (sum % 10) === 0;
+}
+
+function validateExpiryDate(date) {
+    const regex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+    if (!regex.test(date)) return false;
+    
+    const [month, year] = date.split('/');
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear() % 100;
+    const currentMonth = currentDate.getMonth() + 1;
+    
+    if (parseInt(year) < currentYear) return false;
+    if (parseInt(year) === currentYear && parseInt(month) < currentMonth) return false;
+    
+    return true;
+}
+
+function validateCVV(cvv) {
+    return /^[0-9]{3,4}$/.test(cvv);
+}
+
+// Initialize checkout page
+if (document.querySelector('.checkout-section')) {
+    getServiceDetails();
+    document.querySelector('form').addEventListener('submit', handlePayment);
+} 
