@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZLynx Portal - Laurent Agency</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="https://laurentagency.com/" class="site-logo" title="Laurent Agency" rel="home">
+                <h1 class="site-title">Laurent Agency</h1>
+                <small>Insurance • Real Estate • Financial Services</small>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="ai-consulting.html">AI Consulting</a>
+                <a href="ezlynx-portal.html" class="active">Get a Quote</a>
+                <a href="signin.html" class="cta-button">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- EZLynx Portal Hero -->
+    <section class="ezlynx-hero">
+        <div class="container">
+            <h1>Insurance Quote Portal</h1>
+            <p>Get real-time insurance quotes powered by Laurent Agency and EZLynx</p>
+        </div>
+    </section>
+
+    <!-- EZLynx Portal Content -->
+    <section class="ezlynx-content">
+        <div class="container">
+            <div class="quote-iframe-container">
+                <iframe height="2000" src="https://www.agentinsure.com/compare/auto-insurance-home-insurance/laurentagency/quote.aspx" frameborder="0" width="100%"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Laurent Agency</h3>
+                    <p>Your trusted insurance partner since 2000</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: info@laurentagency.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" target="_blank">Facebook</a>
+                        <a href="#" target="_blank">Twitter</a>
+                        <a href="#" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Laurent Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Icon Button -->
+    <div id="chat-icon" class="chat-icon">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="chatbot">
+        <div class="chatbot-header">
+            <h3>Laurent Agent</h3>
+            <button id="chatbot-toggle">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <!-- Messages will be inserted here -->
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-message">Send</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Ensure page starts at the top when loaded
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        };
+    </script>
+</body>
+</html> 

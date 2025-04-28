@@ -117,16 +117,16 @@ class LaurentAgent {
         this.repromptTimer = null;
         this.isReprompting = false;
         this.tooltip = null;
+        this.hasShownInitialPopup = false;
         
         this.setupEventListeners();
         this.initializeChatbot();
     }
 
     initializeChatbot() {
-        // Wait 500ms before showing the chatbot with animation
-        setTimeout(() => {
-            this.openWithAnimation();
-        }, 500);
+        // Show the chatbot automatically when first entering the website
+        this.openWithAnimation();
+        this.hasShownInitialPopup = true;
     }
     
     openWithAnimation() {
@@ -159,11 +159,11 @@ class LaurentAgent {
         if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
         if (this.repromptTimer) clearInterval(this.repromptTimer);
         
-        // Set 30 second inactivity timer
+        // Set 5 second inactivity timer
         this.inactivityTimer = setTimeout(() => {
             this.closeChatbot();
             this.startRepromptCycle();
-        }, 30000);
+        }, 5000);
     }
     
     closeChatbot() {
@@ -175,10 +175,10 @@ class LaurentAgent {
         // Clear any existing reprompt timer
         if (this.repromptTimer) clearInterval(this.repromptTimer);
         
-        // Start 20 second reprompt cycle
+        // Start 5 second reprompt cycle
         this.repromptTimer = setInterval(() => {
             this.showReprompt();
-        }, 20000);
+        }, 5000);
         
         // Show first reprompt immediately
         this.showReprompt();
@@ -246,6 +246,14 @@ class LaurentAgent {
         // Input focus event
         this.input.addEventListener('focus', () => {
             this.resetInactivityTimer();
+        });
+        
+        // Close chatbot when switching pages
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.closeChatbot();
+                this.startRepromptCycle();
+            }
         });
     }
     
@@ -377,19 +385,21 @@ class LaurentAgent {
         if (!this.tooltip) {
             this.tooltip = document.createElement('div');
             this.tooltip.className = 'reprompt-tooltip';
-            this.tooltip.textContent = 'Connect With AI AGENT';
+            this.tooltip.textContent = 'Connect with Laurent Agent';
             this.chatIcon.appendChild(this.tooltip);
-            
-            // Force reflow to ensure animation plays
-            this.tooltip.offsetHeight;
-            this.tooltip.style.animation = 'fadeInOut 3s ease-in-out forwards';
         }
+        this.tooltip.style.display = 'block';
+        
+        // Force reflow to ensure animation plays
+        this.tooltip.offsetHeight;
+        this.tooltip.style.animation = 'none';
+        this.tooltip.offsetHeight; // Trigger reflow
+        this.tooltip.style.animation = 'fadeInOut 3s ease-in-out forwards';
     }
 
     hideTooltip() {
-        if (this.tooltip && !this.isReprompting) {
-            this.tooltip.remove();
-            this.tooltip = null;
+        if (this.tooltip) {
+            this.tooltip.style.display = 'none';
         }
     }
 }
