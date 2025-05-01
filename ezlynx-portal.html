@@ -26,6 +26,17 @@
                 <a href="ai-consulting.html">AI Consulting</a>
                 <a href="ezlynx-portal.html" class="active">Get a Quote</a>
                 <a href="signin.html" class="cta-button">Sign In</a>
+                <div class="user-profile">
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-dropdown">
+                        <a href="profile.html">My Profile</a>
+                        <a href="dashboard.html">Dashboard</a>
+                        <div class="divider"></div>
+                        <a href="#" class="sign-out-btn" onclick="handleSignOut()">Sign Out</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -58,7 +69,7 @@
                 <div class="footer-section">
                     <h3>Contact</h3>
                     <p>Phone: (555) 123-4567</p>
-                    <p>Email: info@laurentagency.com</p>
+                    <p>Email: service@laurentagency.com</p>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
@@ -96,6 +107,7 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="auth.js"></script>
     <script>
         // Ensure page starts at the top when loaded
         window.onload = function() {

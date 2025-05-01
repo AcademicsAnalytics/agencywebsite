@@ -159,11 +159,11 @@ class LaurentAgent {
         if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
         if (this.repromptTimer) clearInterval(this.repromptTimer);
         
-        // Set 5 second inactivity timer
+        // Set 20 second inactivity timer
         this.inactivityTimer = setTimeout(() => {
             this.closeChatbot();
             this.startRepromptCycle();
-        }, 5000);
+        }, 20000);
     }
     
     closeChatbot() {
@@ -302,7 +302,7 @@ class LaurentAgent {
                 } else if (lowerInput.includes('service') || lowerInput.includes('offer')) {
                     this.addMessage('Laurent Agent', 'We offer various insurance services including Auto, Home, Life, and Business insurance. Which type of insurance are you interested in?');
                 } else if (lowerInput.includes('contact') || lowerInput.includes('reach')) {
-                    this.addMessage('Laurent Agent', 'You can reach us at (555) 123-4567 or email us at info@laurentagency.com. Would you like to schedule an appointment?');
+                    this.addMessage('Laurent Agent', 'You can reach us at (555) 123-4567 or email us at service@laurentagency.com. Would you like to schedule an appointment?');
                     if (lowerInput.includes('yes') || lowerInput.includes('sure') || lowerInput.includes('appointment')) {
                         this.addMessage('Laurent Agent', 'Great! Could you please tell me your name?');
                         this.currentState = 'collecting_name';

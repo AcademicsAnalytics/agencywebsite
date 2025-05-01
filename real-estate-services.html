@@ -3,33 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Estate Services - TheInjurenfna</title>
+    <title>Real Estate Services - Laurent Agency</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<body id="real-estate-services-page">
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">
-                <a href="index.html">TheInjurenfna</a>
-            </div>
+    <nav class="navbar">
+        <div class="container">
+            <a href="https://laurentagency.com/" class="site-logo" title="Laurent Agency" rel="home">
+                <h1 class="site-title">Laurent Agency</h1>
+                <small>Insurance • Real Estate • Financial Services</small>
+            </a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="services.html">Services</a>
                 <a href="contact.html">Contact</a>
                 <a href="ai-consulting.html">AI Consulting</a>
-                <a href="signin.html" class="sign-in-btn">Sign In</a>
+                <a href="ezlynx-portal.html">Get a Quote</a>
+                <a href="signin.html" class="cta-button">Sign In</a>
+                <div class="user-profile">
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-dropdown">
+                        <a href="profile.html">My Profile</a>
+                        <a href="dashboard.html">Dashboard</a>
+                        <div class="divider"></div>
+                        <a href="#" class="sign-out-btn" onclick="handleSignOut()">Sign Out</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Service Hero -->
-    <section class="service-hero">
+    <section class="service-hero" id="real-estate-services-top">
         <div class="container">
             <h1>Real Estate Services</h1>
             <p>AI-powered real estate solutions for modern property management</p>
@@ -49,7 +62,7 @@
                         <li>Price Prediction</li>
                         <li>Investment Potential</li>
                     </ul>
-                    <a href="checkout.html?service=PropertyValuation&price=299" class="cta-button">Get Started</a>
+                    <a href="checkout.html?service=PropertyValuation&price=299" class="cta-button" onclick="return requireAuth(event, 'checkout.html?service=PropertyValuation&price=299')">Get Started</a>
                 </div>
 
                 <!-- Property Management -->
@@ -61,7 +74,7 @@
                         <li>Maintenance Tracking</li>
                         <li>Rent Collection</li>
                     </ul>
-                    <a href="checkout.html?service=PropertyManagement&price=499" class="cta-button">Get Started</a>
+                    <a href="checkout.html?service=PropertyManagement&price=499" class="cta-button" onclick="return requireAuth(event, 'checkout.html?service=PropertyManagement&price=499')">Get Started</a>
                 </div>
 
                 <!-- Investment Analysis -->
@@ -73,7 +86,7 @@
                         <li>Market Trends</li>
                         <li>Risk Assessment</li>
                     </ul>
-                    <a href="checkout.html?service=InvestmentAnalysis&price=399" class="cta-button">Get Started</a>
+                    <a href="checkout.html?service=InvestmentAnalysis&price=399" class="cta-button" onclick="return requireAuth(event, 'checkout.html?service=InvestmentAnalysis&price=399')">Get Started</a>
                 </div>
 
                 <!-- Virtual Tours -->
@@ -85,7 +98,7 @@
                         <li>Interactive Tours</li>
                         <li>Virtual Staging</li>
                     </ul>
-                    <a href="checkout.html?service=VirtualTours&price=199" class="cta-button">Get Started</a>
+                    <a href="checkout.html?service=VirtualTours&price=199" class="cta-button" onclick="return requireAuth(event, 'checkout.html?service=VirtualTours&price=199')">Get Started</a>
                 </div>
             </div>
         </div>
@@ -120,13 +133,31 @@
         </div>
     </section>
 
+    <!-- Start Your Insurance Quote -->
+    <section id="start-quote" class="quote-section">
+        <div class="container">
+            <h2>Start Your Insurance Quote</h2>
+            <p>Get real-time insurance quotes powered by Laurent Agency and EZLynx.</p>
+            <div class="quote-iframe-container">
+                <iframe height="2000" src="https://www.agentinsure.com/compare/auto-insurance-home-insurance/laurentagency/quote.aspx" frameborder="0" width="100%"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Bar -->
+    <div class="cta-bar">
+        <div class="container">
+            <p>Ready to get started? <a href="ezlynx-portal.html" onclick="return requireAuth(event, 'ezlynx-portal.html')">Get a Quote</a> or <a href="signin.html">Sign In</a></p>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>TheInjurenfna</h3>
-                    <p>Empowering businesses with innovative AI solutions.</p>
+                    <h3>Laurent Agency</h3>
+                    <p>Your trusted insurance partner since 2000</p>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
@@ -140,7 +171,8 @@
                 <div class="footer-section">
                     <h3>Contact</h3>
                     <p>AI Consultation: <a href="tel:203-833-3157">203-833-3157</a></p>
-                    <p>Email: info@theinjurenfna.com</p>
+                    <p>Email: service@laurentagency.com</p>
+                    <p>AI Email: laurentagencyai@gmail.com</p>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
@@ -158,27 +190,46 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 TheInjurenfna. All rights reserved.</p>
+                <p>&copy; 2024 Laurent Agency. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Chatbot -->
-    <div class="chat-icon">
+    <!-- Chat Icon Button -->
+    <div id="chat-icon" class="chat-icon">
         <i class="fas fa-comments"></i>
     </div>
-    <div class="chatbot">
-        <div class="chat-header">
-            <h3>Chat with Laurent</h3>
-            <button class="close-chat"><i class="fas fa-times"></i></button>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="chatbot">
+        <div class="chatbot-header">
+            <h3>Laurent Agent</h3>
+            <button id="chatbot-toggle">×</button>
         </div>
-        <div class="chat-messages"></div>
-        <div class="chat-input">
-            <input type="text" placeholder="Type your message...">
-            <button><i class="fas fa-paper-plane"></i></button>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <!-- Messages will be inserted here -->
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-message">Send</button>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Ensure page starts at the top when loaded
+        window.onload = function() {
+            window.scrollTo(0, 0);
+            
+            // Check if we came from a link with the #real-estate-services-top hash
+            if (window.location.hash === '#real-estate-services-top') {
+                // Small delay to ensure the page is fully loaded
+                setTimeout(function() {
+                    document.getElementById('real-estate-services-top').scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        };
+    </script>
 </body>
 </html> 

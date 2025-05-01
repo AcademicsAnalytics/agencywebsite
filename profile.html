@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Laurent Agency</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body id="profile-page">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="https://laurentagency.com/" class="site-logo" title="Laurent Agency" rel="home">
+                <h1 class="site-title">Laurent Agency</h1>
+                <small>Insurance • Real Estate • Financial Services</small>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="ai-consulting.html">AI Consulting</a>
+                <a href="ezlynx-portal.html">Get a Quote</a>
+                <a href="signin.html" class="cta-button">Sign In</a>
+                <div class="user-profile">
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-dropdown">
+                        <a href="profile.html">My Profile</a>
+                        <a href="dashboard.html">Dashboard</a>
+                        <div class="divider"></div>
+                        <a href="#" class="sign-out-btn" onclick="handleSignOut()">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-content">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img id="profile-picture" src="https://ui-avatars.com/api/?name=User&background=007bff&color=fff" alt="Profile Picture">
+                        <button class="edit-avatar" onclick="showAvatarModal()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-info">
+                        <h1 id="profile-name">Loading...</h1>
+                        <p id="profile-email">Loading...</p>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span class="stat-value" id="policies-count">0</span>
+                                <span class="stat-label">Policies</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="claims-count">0</span>
+                                <span class="stat-label">Claims</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="documents-count">0</span>
+                                <span class="stat-label">Documents</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Navigation -->
+                <div class="profile-nav">
+                    <button class="nav-item active" data-tab="account">Account</button>
+                    <button class="nav-item" data-tab="policies">Policies</button>
+                    <button class="nav-item" data-tab="documents">Documents</button>
+                    <button class="nav-item" data-tab="security">Security</button>
+                </div>
+
+                <!-- Profile Content -->
+                <div class="profile-tabs">
+                    <!-- Account Tab -->
+                    <div class="tab-content active" id="account-tab">
+                        <div class="detail-card">
+                            <h3>Personal Information</h3>
+                            <form id="personal-info-form" class="profile-form">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="detail-name" value="Loading...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="detail-email" value="Loading...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="detail-phone" placeholder="Add phone number">
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" id="detail-address" placeholder="Add address">
+                                </div>
+                                <button type="submit" class="cta-button">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Policies Tab -->
+                    <div class="tab-content" id="policies-tab">
+                        <div class="policies-grid">
+                            <!-- Policies will be loaded dynamically -->
+                            <div class="empty-state">
+                                <i class="fas fa-file-alt"></i>
+                                <p>No policies found</p>
+                                <a href="services.html" class="cta-button">Get a Quote</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documents Tab -->
+                    <div class="tab-content" id="documents-tab">
+                        <div class="documents-grid">
+                            <!-- Documents will be loaded dynamically -->
+                            <div class="empty-state">
+                                <i class="fas fa-folder-open"></i>
+                                <p>No documents uploaded</p>
+                                <button class="cta-button" onclick="showUploadModal()">Upload Document</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Tab -->
+                    <div class="tab-content" id="security-tab">
+                        <div class="detail-card">
+                            <h3>Security Settings</h3>
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Password</h4>
+                                    <p>Last changed: <span id="last-password-change">Never</span></p>
+                                </div>
+                                <button class="cta-button" onclick="showPasswordModal()">Change Password</button>
+                            </div>
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Two-Factor Authentication</h4>
+                                    <p>Add an extra layer of security to your account</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="2fa-toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Login History</h4>
+                                    <p>View your recent login activity</p>
+                                </div>
+                                <button class="cta-button" onclick="showLoginHistory()">View History</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <div id="avatar-modal" class="modal">
+        <div class="modal-content">
+            <h3>Update Profile Picture</h3>
+            <div class="avatar-options">
+                <div class="avatar-option">
+                    <img src="https://ui-avatars.com/api/?name=User&background=007bff&color=fff" alt="Avatar 1">
+                    <button class="cta-button">Use This</button>
+                </div>
+                <div class="avatar-option">
+                    <img src="https://ui-avatars.com/api/?name=User&background=28a745&color=fff" alt="Avatar 2">
+                    <button class="cta-button">Use This</button>
+                </div>
+            </div>
+            <button class="close-modal" onclick="closeAvatarModal()">×</button>
+        </div>
+    </div>
+
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <h3>Change Password</h3>
+            <form id="password-form" class="profile-form">
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="cta-button">Update Password</button>
+            </form>
+            <button class="close-modal" onclick="closePasswordModal()">×</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Laurent Agency</h3>
+                    <p>Your trusted insurance partner since 2000</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="ai-consulting.html">AI Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>AI Consultation: <a href="tel:203-833-3157">203-833-3157</a></p>
+                    <p>Email: service@laurentagency.com</p>
+                    <p>AI Email: laurentagencyai@gmail.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/erik-lorent-b949a1141/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://www.facebook.com/share/1AV1VRjX6i/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://x.com/eriklorent" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-x-twitter"></i> Twitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Laurent Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        // Update profile information when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData) {
+                // Update profile information
+                document.getElementById('profile-name').textContent = userData.name;
+                document.getElementById('profile-email').textContent = userData.email;
+                document.getElementById('detail-name').value = userData.name;
+                document.getElementById('detail-email').value = userData.email;
+                if (userData.phone) {
+                    document.getElementById('detail-phone').value = userData.phone;
+                }
+                if (userData.address) {
+                    document.getElementById('detail-address').value = userData.address;
+                }
+
+                // Update profile picture
+                const profilePicture = document.getElementById('profile-picture');
+                profilePicture.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=007bff&color=fff`;
+
+                // Initialize tab functionality
+                initializeTabs();
+            } else {
+                window.location.href = 'signin.html';
+            }
+        });
+
+        // Tab functionality
+        function initializeTabs() {
+            const tabs = document.querySelectorAll('.nav-item');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+        }
+
+        // Modal functionality
+        function showAvatarModal() {
+            document.getElementById('avatar-modal').style.display = 'block';
+        }
+
+        function closeAvatarModal() {
+            document.getElementById('avatar-modal').style.display = 'none';
+        }
+
+        function showPasswordModal() {
+            document.getElementById('password-modal').style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').style.display = 'none';
+        }
+
+        // Form submission handlers
+        document.getElementById('personal-info-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            userData.name = document.getElementById('detail-name').value;
+            userData.email = document.getElementById('detail-email').value;
+            userData.phone = document.getElementById('detail-phone').value;
+            userData.address = document.getElementById('detail-address').value;
+            localStorage.setItem('userData', JSON.stringify(userData));
+            alert('Profile updated successfully!');
+        });
+
+        document.getElementById('password-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add password change logic here
+            alert('Password updated successfully!');
+            closePasswordModal();
+        });
+    </script>
+</body>
+</html> 
