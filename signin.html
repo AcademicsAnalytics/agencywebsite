@@ -98,14 +98,8 @@
             // Store user data in localStorage
             localStorage.setItem('userData', JSON.stringify(userData));
 
-            // Check for redirect URL
-            const redirectUrl = localStorage.getItem('redirectAfterLogin');
-            if (redirectUrl) {
-                localStorage.removeItem('redirectAfterLogin');
-                window.location.href = redirectUrl;
-            } else {
-                window.location.href = 'dashboard.html';
-            }
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
         }
     </script>
     <script src="auth.js"></script>

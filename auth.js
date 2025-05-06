@@ -64,17 +64,4 @@ document.addEventListener('DOMContentLoaded', () => {
 // Handle sign out
 function handleSignOut() {
     Auth.logout();
-}
-
-// Function to check authentication and redirect if needed
-function requireAuth(event, redirectUrl) {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    if (!userData) {
-        event.preventDefault();
-        // Store the intended destination in localStorage
-        localStorage.setItem('redirectAfterLogin', redirectUrl);
-        window.location.href = 'signin.html';
-        return false;
-    }
-    return true;
 } 

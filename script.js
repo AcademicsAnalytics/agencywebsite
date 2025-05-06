@@ -11,50 +11,50 @@ class BackgroundSlider {
     }
     
     async loadImages() {
-        try {
-            // Define the image files explicitly to ensure they're loaded correctly
-            const imageFiles = [
-                'images/1.jpg',
-                'images/2.webp',
-                'images/3.jpg',
-                'images/4.webp',
-                'images/5.webp',
-                'images/6.webp',
-                'images/7.webp'
-            ];
-            
-            // Clear existing slides
-            const slider = document.querySelector('.hero-slider');
-            slider.innerHTML = '';
-            
-            // Add new slides with error handling
-            imageFiles.forEach(file => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                slide.style.backgroundImage = `url('${file}')`;
-                
-                // Add error handling for background images
+        const slider = document.querySelector('.hero-slider');
+        const existingSlides = slider.querySelectorAll('.slide');
+        
+        if (existingSlides.length > 0) {
+            // Use slides already in HTML so the first image is visible instantly
+            this.slides = existingSlides;
+            this.slides.forEach((slide, index) => {
+                // Ensure only the first slide is active (visible), others hidden
+                if (index === 0) slide.classList.add('active');
+                else slide.classList.remove('active');
+                // Preload each background image and switch to fallback if it fails
+                const imagePath = slide.style.backgroundImage.slice(5, -2);
                 const img = new Image();
-                img.onerror = function() {
+                img.onerror = () => {
+                    console.warn(`Failed to load image: ${imagePath}`);
                     slide.style.backgroundImage = "url('images/fallback.jpg')";
                 };
-                img.src = file;
-                
-                slider.appendChild(slide);
+                img.src = imagePath;
             });
-            
-            // Add overlay
+        } else {
+            // If no slides exist in HTML, create them dynamically (as fallback)
+            for (let i = 1; i <= 7; i++) {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                const imagePath = `images/${i}.jpg`;
+                slide.style.backgroundImage = `url('${imagePath}')`;
+                // Set fallback on load error
+                const img = new Image();
+                img.onerror = () => {
+                    console.warn(`Failed to load image: ${imagePath}`);
+                    slide.style.backgroundImage = "url('images/fallback.jpg')";
+                };
+                img.src = imagePath;
+                slider.appendChild(slide);
+            }
+            // Re-add the overlay on top of slides
             const overlay = document.createElement('div');
             overlay.className = 'overlay';
             slider.appendChild(overlay);
-            
-            // Update slides reference
-            this.slides = document.querySelectorAll('.slide');
+            // Update slides list and activate the first slide for display
+            this.slides = slider.querySelectorAll('.slide');
             if (this.slides.length > 0) {
                 this.slides[0].classList.add('active');
             }
-        } catch (error) {
-            console.error('Error loading images:', error);
         }
     }
     
