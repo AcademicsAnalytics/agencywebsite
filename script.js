@@ -124,9 +124,11 @@ class LaurentAgent {
     }
 
     initializeChatbot() {
-        // Show the chatbot automatically when first entering the website
-        this.openWithAnimation();
-        this.hasShownInitialPopup = true;
+        // Only show the chatbot automatically on desktop devices
+        if (window.innerWidth > 768) {
+            this.openWithAnimation();
+            this.hasShownInitialPopup = true;
+        }
     }
     
     openWithAnimation() {
